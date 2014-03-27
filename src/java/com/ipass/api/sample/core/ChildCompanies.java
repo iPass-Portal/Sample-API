@@ -47,10 +47,10 @@ public class ChildCompanies {
 	/**
 	 * The following variables must be configured with your own account settings
 	 */
-	String BASE_URL = "https://symphonyqa.ipass.com";
-	String username = "symphony@ipass.com";
-	String password = "qaomportal";
-	String companyId = "102"; //"1023978"; //"1022878";
+	String BASE_URL = "https://openmobile.ipass.com";
+	String username = "johnsmith@acme.com";
+	String password = "changeme";
+	String companyId = "987654";
 	
 	HttpClient httpClient = null;
 	
