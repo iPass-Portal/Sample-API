@@ -15,7 +15,7 @@ read COMPANY
 Echo Enter the month in the format YYYY-MM
 read MONTH
 
-Echo Enter the filename including the extension, e.g. ClientUserVersion.html
+Echo Enter the filename including the extension, e.g. ClientUserVersionReport.html, or ClientUserDomainReport.html
 read FILENAME
 
 # Login to the Portal as a user who has access to view Custom Report

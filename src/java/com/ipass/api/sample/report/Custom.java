@@ -57,7 +57,8 @@ public class Custom {
 	String username = "johnsmith@acme.com";
 	String password = "changeme";
 	String companyId = "987654";
-	String filename = "ClientUserVersionReport.html";
+	String clientUserVersion = "ClientUserVersionReport.html";
+	String clientUserDomain = "ClientUserDomainReport.html";
 	String month = "2014-02";
 	
 	HttpClient httpClient = null;
@@ -70,9 +71,9 @@ public class Custom {
 		}
 	};
 	
-	public void downloadCustom() throws ClientProtocolException, IOException { 
+	public void downloadClientUserVersion() throws ClientProtocolException, IOException { 
 		// Prepare the Custom Report API call to download ClientUserVersion Reports for ALL child companies (in ZIP)
-		String reportURI = "/moservices/rest/api/ipass/" + companyId + "/mo/reports/monthly/custom?User-Agent=apiuser&month=" + month + "&filename=" + filename;
+		String reportURI = "/moservices/rest/api/ipass/" + companyId + "/mo/reports/monthly/custom?User-Agent=apiuser&month=" + month + "&filename=" + clientUserVersion;
 		HttpGet reportGet = new HttpGet(BASE_URL + reportURI);
 		
 		// Make the Custom Report API call to obtain the ClientUserVersion Reports for ALL child companies (in ZIP)
@@ -85,7 +86,26 @@ public class Custom {
 		
 		// Process the HTTP Response to be saved to C:\Temp\ClientUserVersionReport.zip (This contains ClientUserVersions report for ALL child companies)
 		byte[] reportByteOutput = EntityUtils.toByteArray(httpEntity);
-		Path path = FileSystems.getDefault().getPath("C:\\Temp", filename.replaceFirst("html", "zip"));
+		Path path = FileSystems.getDefault().getPath("C:\\Temp", clientUserVersion.replaceFirst("html", "zip"));
+		Files.write(path, reportByteOutput, StandardOpenOption.CREATE);
+	}
+
+	public void downloadClientUserDomain() throws ClientProtocolException, IOException { 
+		// Prepare the Custom Report API call to download ClientUserDomain Reports for ALL child companies (in ZIP)
+		String reportURI = "/moservices/rest/api/ipass/" + companyId + "/mo/reports/monthly/custom?User-Agent=apiuser&month=" + month + "&filename=" + clientUserDomain;
+		HttpGet reportGet = new HttpGet(BASE_URL + reportURI);
+		
+		// Make the Custom Report API call to obtain the ClientUserDomain Reports for ALL child companies (in ZIP)
+		HttpResponse reportGetResponse = httpClient.execute(reportGet);
+		HttpEntity httpEntity = reportGetResponse.getEntity();
+		
+		// Process the HTTP Response to be output to the screen
+		// String reportOutput = EntityUtils.toString(httpEntity);
+		// System.out.println(reportOutput);
+		
+		// Process the HTTP Response to be saved to C:\Temp\ClientUserDomainReport.zip (This contains ClientUserDomain report for ALL child companies)
+		byte[] reportByteOutput = EntityUtils.toByteArray(httpEntity);
+		Path path = FileSystems.getDefault().getPath("C:\\Temp", clientUserDomain.replaceFirst("html", "zip"));
 		Files.write(path, reportByteOutput, StandardOpenOption.CREATE);
 	}
 
@@ -123,7 +143,8 @@ public class Custom {
 	public static void main(String[] args) {
 		try { 
 			Custom atr = new Custom();
-			atr.downloadCustom();
+			atr.downloadClientUserDomain();
+			atr.downloadClientUserVersion();
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
