@@ -9,6 +9,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
@@ -17,10 +18,13 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
@@ -28,6 +32,7 @@ import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 /**
@@ -120,11 +125,16 @@ public class MonthlyCDR {
 		httpClient = new DefaultHttpClient(ccm);
 		
 		// Prepare the Login API Call with the appropriate parameters 
-		String loginURI = "/moservices/rest/api/login?User-Agent=apiuser&username=" + username + "&password=" + password;
-		HttpGet loginGet = new HttpGet(BASE_URL + loginURI);
+		String loginURI = "/moservices/rest/api/login?User-Agent=apiuser";
+		HttpPost loginPost = new HttpPost(BASE_URL + loginURI);
+		
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("username", username));
+		nameValuePairs.add(new BasicNameValuePair("password", password));
+		loginPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		
 		// Make the Login API call to authenticate 
-		HttpResponse loginResponse = httpClient.execute(loginGet);
+		HttpResponse loginResponse = httpClient.execute(loginPost);
 
 		// Consume content so the HTTPClient can be re-used
 		loginResponse.getEntity().consumeContent();
