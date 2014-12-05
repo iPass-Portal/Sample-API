@@ -1,0 +1,58 @@
+FORMAT: 1A
+
+# OM Portal API Documentation
+This documentation shows you how you can start interacting with iPass OM Product using almost any programming language vis REST API call.
+
+# Group Getting Started
+This shows how you can get started on API with iPass OM Portal
+
+## How to get API Key
+
+# Provisioning
+These sets of API enable you to provision and perform administrative task on your end-user.
+
+## End User [/enduser]
+### ?action=list [POST]
++ Response 200 (application/xml)
+
+        <enduser>
+           <endUserId>123</endUserId>
+         </enduser>
+
+### ?action=create [POST]
++ Request (application/json)
+
+        { "title": "Buy cheese and bread for breakfast." }
+
++ Response 201 (application/json)
+
+        { "id": 3, "title": "Buy cheese and bread for breakfast." }
+
+### ?action=search [POST]
+
+### ?action=delete [POST]
+
+### ?action=sendActivation [POST]
+
+### ?action=update [POST]
+
+
+## Note [/notes/{id}]
+A single Note object with all its details
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Note to perform action with. Has example value.
+
+### Retrieve a Note [GET]
++ Response 200 (application/json)
+
+    + Header
+
+            X-My-Header: The Value
+
+    + Body
+
+            { "id": 2, "title": "Pick-up posters from post-office" }
+
+### Remove a Note [DELETE]
++ Response 204
