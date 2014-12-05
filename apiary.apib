@@ -11,8 +11,30 @@ This shows how you can get started on API with iPass OM Portal
 # Provisioning
 These sets of API enable you to provision and perform administrative task on your end-user.
 
-## End User [/enduser]
+Java Example:
+```Java
+function test() {
+  console.log("notice the blank line before this function?");
+}
+```
+PHP Example:
+```php
+function test() {
+  console.log("notice the blank line before this function?");
+}
+```
+
+## End User [/enduser/]
++ Parameters
+  + companyId (required,string) ... CompanyId the End-User belongs to
+
 ### ?action=list [POST]
++ Parameters
+  + maxPage (optional, index) ... Maximum # of entries in a single page
++ Request
+
+        
+
 + Response 200 (application/xml)
 
         <enduser>
